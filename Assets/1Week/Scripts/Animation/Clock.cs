@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,22 +6,25 @@ public class Clock : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 {
     [SerializeField] Image Buttery;
     [SerializeField] Buttery ButteryMethod;
-    bool A;
+    //マウスポインタ―がクリックされているかどうかのbool値
+    bool OnPointer = false;
     bool clear;
+    //クリアに必要なFillの値
+    float Fill = 0.96f;
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        A = true;
+        OnPointer = true;
     }
     
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
-        A = false;
+        OnPointer = false;
     }
 
     private void Update()
     {
-        if (A)
+        if (OnPointer)
         {
             // プレイヤーのスクリーン座標を計算する
             var screenPos = Camera.main.WorldToScreenPoint(transform.parent.position);
@@ -38,6 +39,7 @@ public class Clock : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
             var angles = transform.parent.localEulerAngles;
             angles.z = angle - 90;
 
+            //範囲外の場合はスキップ
             if(angles.z > 0 && angles.z < 62)
             {
                 return;
@@ -45,12 +47,13 @@ public class Clock : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 
             transform.parent.localEulerAngles = angles;
 
-            if(Buttery.fillAmount > 0.96f && !clear)
+            //クリアしていなかったらする処理
+            if(Buttery.fillAmount > Fill && !clear)
             {
-                ButteryMethod.playAnimation();
+                ButteryMethod.PlayAnimation();
                 clear = true;
             }
-            else if(Buttery.fillAmount < 0.99f)
+            else if(Buttery.fillAmount < 1f)
             {
                 Buttery.fillAmount = 1 - ((transform.parent.localEulerAngles.z - 60) / 300);
 
@@ -59,7 +62,12 @@ public class Clock : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 
     }
 
-    public float GetAngle(Vector2 from, Vector2 to)
+    /// <summary>
+    /// マウスカーソルが存在する方向の角度を取得
+    /// </summary>
+    /// <param name="from">原点</param>
+    /// <param name="to">プレイヤーから見たマウスカーソル座標</param>
+    private float GetAngle(Vector2 from, Vector2 to)
     {
         // 指定された2つの一から角度を求める
         var dx = to.x - from.x;

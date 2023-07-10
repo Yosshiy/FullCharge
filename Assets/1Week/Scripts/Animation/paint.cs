@@ -22,7 +22,7 @@ public class paint : MonoBehaviour,IPointerClickHandler
 
         if(ButteryImage.color == ButteryEndImage.color)
         {
-            Buttery.playAnimation();
+            Buttery.PlayAnimation();
             Debug.Log("A");
         }
     }

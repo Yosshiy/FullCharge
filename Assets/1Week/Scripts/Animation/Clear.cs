@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +18,6 @@ public class Clear : MonoBehaviour
                .Append(Clear2.DOText("REPLAY TO ENTER", 2))
                .Append(Clear2.rectTransform.DOPunchScale(Vector3.one * 0.2f, 1, 3))
                .SetLink(this.gameObject);
-
-
 
         Observable.EveryUpdate()
                   .Where(x => Clear2.text == "REPLAY TO ENTER")

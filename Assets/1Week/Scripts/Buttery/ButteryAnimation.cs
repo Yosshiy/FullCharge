@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Buttery : MonoBehaviour
+public class ButteryAnimation : MonoBehaviour
 {
     [SerializeField] Image ButteryImage;
     [SerializeField] Image EffectImage;

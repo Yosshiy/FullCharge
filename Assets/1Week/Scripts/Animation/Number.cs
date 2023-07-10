@@ -99,7 +99,7 @@ public class Number : MonoBehaviour
                      .Append(ButteryImage.DOFillAmount(1,1))
                      .AppendCallback(() =>
                      {
-                         Buttery.playAnimation();
+                         Buttery.PlayAnimation();
                      });
     }
 }
